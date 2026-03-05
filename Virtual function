@@ -1,0 +1,71 @@
+#include <iostream>
+using namespace std;
+
+// Abstract Base Class
+class Shape {
+public:
+    virtual double area() const = 0;   // Pure virtual function
+
+    virtual void display() const {     // Normal virtual function
+        cout << "Calculating Area..." << endl;
+    }
+
+    virtual ~Shape() {                 // Virtual Destructor
+        cout << "Shape Destructor Called" << endl;
+    }
+};
+
+// Derived Class - Rectangle
+class Rectangle : public Shape {
+private:
+    double length, width;
+
+public:
+    Rectangle(double l, double w) : length(l), width(w) {}
+
+    double area() const override {
+        return length * width;
+    }
+
+    void display() const override {
+        cout << "Rectangle Area: " << area() << endl;
+    }
+
+    ~Rectangle() {
+        cout << "Rectangle Destructor Called" << endl;
+    }
+};
+
+// Derived Class - Circle
+class Circle : public Shape {
+private:
+    double radius;
+
+public:
+    Circle(double r) : radius(r) {}
+
+    double area() const override {
+        return 3.14159 * radius * radius;
+    }
+
+    void display() const override {
+        cout << "Circle Area: " << area() << endl;
+    }
+
+    ~Circle() {
+        cout << "Circle Destructor Called" << endl;
+    }
+};
+
+int main() {
+    Shape* s1 = new Rectangle(10, 5);
+    Shape* s2 = new Circle(7);
+
+    s1->display();
+    s2->display();
+
+    delete s1;   // Calls derived + base destructor properly
+    delete s2;
+
+    return 0;
+}

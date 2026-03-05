@@ -1,0 +1,187 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// ================================
+// Base Class (Level 1) - Person
+// ================================
+class Person {
+protected:
+    string name;
+    int age;
+    string address;
+
+public:
+    Person(string name, int age, string address) {
+        this->name = name;
+        this->age = age;
+        this->address = address;
+    }
+
+    void displayPersonInfo() {
+        cout << "┌──────────────────────────────────┐" << endl;
+        cout << "│       PERSONAL INFORMATION       │" << endl;
+        cout << "├──────────────────────────────────┤" << endl;
+        cout << "│ Name    : " << name << endl;
+        cout << "│ Age     : " << age << " years" << endl;
+        cout << "│ Address : " << address << endl;
+    }
+};
+
+// ================================
+// Derived Class (Level 2) - Employee
+// Inherits from Person
+// ================================
+class Employee : public Person {
+protected:
+    int empId;
+    string department;
+    double basicSalary;
+
+public:
+    Employee(string name, int age, string address,
+             int empId, string department, double basicSalary)
+        : Person(name, age, address) {
+        this->empId = empId;
+        this->department = department;
+        this->basicSalary = basicSalary;
+    }
+
+    void displayEmployeeInfo() {
+        cout << "├──────────────────────────────────┤" << endl;
+        cout << "│       EMPLOYEE INFORMATION       │" << endl;
+        cout << "├──────────────────────────────────┤" << endl;
+        cout << "│ Emp ID      : " << empId << endl;
+        cout << "│ Department  : " << department << endl;
+        cout << "│ Basic Salary: $" << basicSalary << endl;
+    }
+};
+
+// ================================
+// Derived Class (Level 3) - Manager
+// Inherits from Employee
+// ================================
+class Manager : public Employee {
+private:
+    int teamSize;
+    double bonus;
+    string project;
+
+public:
+    Manager(string name, int age, string address,
+            int empId, string department, double basicSalary,
+            int teamSize, double bonus, string project)
+        : Employee(name, age, address, empId, department, basicSalary) {
+        this->teamSize = teamSize;
+        this->bonus = bonus;
+        this->project = project;
+    }
+
+    double calculateTotalSalary() {
+        return basicSalary + bonus;
+    }
+
+    void displayManagerInfo() {
+        cout << "├──────────────────────────────────┤" << endl;
+        cout << "│       MANAGER INFORMATION        │" << endl;
+        cout << "├──────────────────────────────────┤" << endl;
+        cout << "│ Project      : " << project << endl;
+        cout << "│ Team Size    : " << teamSize << " members" << endl;
+        cout << "│ Bonus        : $" << bonus << endl;
+        cout << "│ Total Salary : $" << calculateTotalSalary() << endl;
+        cout << "└──────────────────────────────────┘" << endl;
+    }
+
+    // Display complete profile using all inherited functions
+    void displayFullProfile() {
+        displayPersonInfo();     // From Person (Level 1)
+        displayEmployeeInfo();   // From Employee (Level 2)
+        displayManagerInfo();    // From Manager (Level 3)
+    }
+};
+
+// ================================
+// Another Level 3 Class - Intern
+// Inherits from Employee
+// ================================
+class Intern : public Employee {
+private:
+    int durationMonths;
+    string mentor;
+    string university;
+
+public:
+    Intern(string name, int age, string address,
+           int empId, string department, double basicSalary,
+           int durationMonths, string mentor, string university)
+        : Employee(name, age, address, empId, department, basicSalary) {
+        this->durationMonths = durationMonths;
+        this->mentor = mentor;
+        this->university = university;
+    }
+
+    double calculateStipend() {
+        return basicSalary * durationMonths;
+    }
+
+    void displayInternInfo() {
+        cout << "├──────────────────────────────────┤" << endl;
+        cout << "│        INTERN INFORMATION        │" << endl;
+        cout << "├──────────────────────────────────┤" << endl;
+        cout << "│ University    : " << university << endl;
+        cout << "│ Mentor        : " << mentor << endl;
+        cout << "│ Duration      : " << durationMonths << " months" << endl;
+        cout << "│ Total Stipend : $" << calculateStipend() << endl;
+        cout << "└──────────────────────────────────┘" << endl;
+    }
+
+    void displayFullProfile() {
+        displayPersonInfo();     // From Person (Level 1)
+        displayEmployeeInfo();   // From Employee (Level 2)
+        displayInternInfo();     // From Intern (Level 3)
+    }
+};
+
+// ================================
+// Main Function
+// ================================
+int main() {
+
+    cout << "\n======================================" << endl;
+    cout << "   EMPLOYEE MANAGEMENT SYSTEM" << endl;
+    cout << "======================================\n" << endl;
+
+    // Creating Manager object
+    Manager mgr(
+        "Alice Johnson", 35, "123 Main St, New York",
+        1001, "Software Engineering", 8000.00,
+        10, 2500.00, "AI Chatbot"
+    );
+
+    // Creating Intern object
+    Intern intern(
+        "Bob Smith", 21, "456 Oak Ave, Boston",
+        2001, "Data Science", 1500.00,
+        6, "Alice Johnson", "MIT"
+    );
+
+    // Display Manager's Full Profile
+    cout << "👔 MANAGER PROFILE:" << endl;
+    mgr.displayFullProfile();
+
+    cout << endl;
+
+    // Display Intern's Full Profile
+    cout << "🎓 INTERN PROFILE:" << endl;
+    intern.displayFullProfile();
+
+    cout << "\n======================================" << endl;
+    cout << "   SALARY COMPARISON" << endl;
+    cout << "======================================" << endl;
+    cout << "Manager (" << "Alice" << ") Total Salary : $"
+         << mgr.calculateTotalSalary() << "/month" << endl;
+    cout << "Intern  (" << "Bob" << ")   Total Stipend: $"
+         << intern.calculateStipend() << " (full duration)" << endl;
+
+    return 0;
+}

@@ -1,0 +1,54 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+class Animal {
+protected:
+    string name;
+    int age;
+
+public:
+    // Constructor
+    Animal(string name, int age) {
+        this->name = name;
+        this->age = age;
+        cout << "✅ Animal constructor called for: " << name << endl;
+    }
+
+    // Member functions
+    void eat() {
+        cout << name << " is eating." << endl;
+    }
+
+    void sleep() {
+        cout << name << " is sleeping." << endl;
+    }
+
+    void displayInfo() {
+        cout << "Name: " << name << ", Age: " << age << " years" << endl;
+    }
+
+    // Destructor
+    ~Animal() {
+        cout << "❌ Animal destructor called for: " << name << endl;
+    }
+};
+
+class Dog : public Animal {
+private:
+    string breed;
+
+public:
+  
+    Dog(string name, int age, string breed) : Animal(name, age) {
+        this->breed = breed;
+        cout << "✅ Dog constructor called for: " << name << endl;
+    }
+
+    
+    void bark() {
+        cout << name << " says: Woof! Woof! 🐕" << endl;
+    }
+
+    void 

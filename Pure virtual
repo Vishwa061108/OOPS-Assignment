@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Abstract Base Class
+class Payment {
+public:
+    // Pure virtual function
+    virtual void pay(double amount) = 0;
+
+    virtual void receipt() {
+        cout << "Payment processed successfully." << endl;
+    }
+
+    virtual ~Payment() {
+        cout << "Payment Destructor Called" << endl;
+    }
+};
+
+// Derived Class 1
+class CreditCard : public Payment {
+public:
+    void pay(double amount) override {
+        cout << "Paid ₹" << amount << " using Credit Card." << endl;
+    }
+
+    ~CreditCard() {
+        cout << "CreditCard Destructor Called" << endl;
+    }
+};
+
+// Derived Class 2
+class UPI : public Payment {
+public:
+    void pay(double amount) override {
+        cout << "Paid ₹" << amount << " using UPI." << endl;
+    }
+
+    ~UPI() {
+        cout << "UPI Destructor Called" << endl;
+    }
+};
+
+int main() {
+    vector<Payment*> payments;
+
+    payments.push_back(new CreditCard());
+    payments.push_back(new UPI());
+
+    for (Payment* p : payments) {
+        p->pay(1000);
+        p->receipt();
+        cout << "------------------" << endl;
+    }
+
+    // Free memory
+    for (Payment* p : payments) {
+        delete p;
+    }
+
+    return 0;
+}

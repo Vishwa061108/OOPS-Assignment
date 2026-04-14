@@ -1,0 +1,57 @@
+#include <iostream>
+using namespace std;
+
+// Base Class
+class A {
+protected:
+    int x;
+
+public:
+    A(int a) {
+        x = a;
+        cout << "Class A Constructor Called" << endl;
+    }
+
+    void showA() {
+        cout << "Value of x: " << x << endl;
+    }
+};
+
+// Derived Class B (Virtual Inheritance)
+class B : virtual public A {
+public:
+    B(int a) : A(a) {
+        cout << "Class B Constructor Called" << endl;
+    }
+};
+
+// Derived Class C (Virtual Inheritance)
+class C : virtual public A {
+public:
+    C(int a) : A(a) {
+        cout << "Class C Constructor Called" << endl;
+    }
+};
+
+// Final Derived Class
+class D : public B, public C {
+private:
+    int y;
+
+public:
+    D(int a, int b) : A(a), B(a), C(a) {
+        y = b;
+        cout << "Class D Constructor Called" << endl;
+    }
+
+    void display() {
+        showA();   // No ambiguity due to virtual inheritance
+        cout << "Value of y: " << y << endl;
+    }
+};
+
+int main() {
+    D obj(10, 20);
+    obj.display();
+    return 0;
+}

@@ -1,0 +1,75 @@
+#include <iostream>
+using namespace std;
+
+// Base Class
+class Shape {
+protected:
+    float a, b;
+
+public:
+    Shape(float x = 0, float y = 0) {
+        a = x;
+        b = y;
+        cout << "Shape Constructor Called" << endl;
+    }
+
+    virtual float area() {
+        return 0;
+    }
+
+    void display() {
+        cout << "Dimensions: " << a << ", " << b << endl;
+    }
+};
+
+// Derived Class 1
+class Rectangle : public Shape {
+public:
+    Rectangle(float x, float y) : Shape(x, y) {}
+
+    float area() {
+        return a * b;
+    }
+};
+
+// Derived Class 2
+class Triangle : public Shape {
+public:
+    Triangle(float x, float y) : Shape(x, y) {}
+
+    float area() {
+        return 0.5 * a * b;
+    }
+};
+
+// Derived Class 3
+class Circle : public Shape {
+public:
+    Circle(float r) : Shape(r) {}
+
+    float area() {
+        return 3.14 * a * a;
+    }
+};
+
+int main() {
+    Shape* ptr;
+
+    Rectangle r(10, 5);
+    Triangle t(10, 5);
+    Circle c(7);
+
+    ptr = &r;
+    ptr->display();
+    cout << "Rectangle Area: " << ptr->area() << endl;
+
+    ptr = &t;
+    ptr->display();
+    cout << "Triangle Area: " << ptr->area() << endl;
+
+    ptr = &c;
+    ptr->display();
+    cout << "Circle Area: " << ptr->area() << endl;
+
+    return 0;
+}

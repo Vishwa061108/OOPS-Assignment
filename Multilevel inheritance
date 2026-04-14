@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+
+// Base Class
+class Person {
+protected:
+    string name;
+
+public:
+    Person(string n) {
+        name = n;
+        cout << "Person Constructor Called" << endl;
+    }
+
+    void display() {
+        cout << "Name: " << name << endl;
+    }
+};
+
+// First Derived Class
+class Student : public Person {
+protected:
+    int roll_no;
+
+public:
+    Student(string n, int r) : Person(n) {
+        roll_no = r;
+        cout << "Student Constructor Called" << endl;
+    }
+
+    void showStudent() {
+        display();
+        cout << "Roll No: " << roll_no << endl;
+    }
+};
+
+// Second Derived Class (Multilevel)
+class Result : public Student {
+private:
+    int marks;
+
+public:
+    Result(string n, int r, int m) : Student(n, r) {
+        marks = m;
+        cout << "Result Constructor Called" << endl;
+    }
+
+    // Function overriding
+    void display() {
+        cout << "Displaying Final Result" << endl;
+        cout << "Name: " << name << endl;
+        cout << "Roll No: " << roll_no << endl;
+        cout << "Marks: " << marks << endl;
+    }
+};
+
+int main() {
+    Result r("Vishwa", 101, 95);
+    r.display();  // Calls overridden function
+    return 0;
+}

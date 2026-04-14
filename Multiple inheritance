@@ -1,0 +1,60 @@
+#include <iostream>
+using namespace std;
+
+// Base Class 1
+class Father {
+protected:
+    int f_money;
+
+public:
+    Father(int m) {
+        f_money = m;
+        cout << "Father Constructor Called" << endl;
+    }
+
+    void show() {
+        cout << "Father's Money: " << f_money << endl;
+    }
+};
+
+// Base Class 2
+class Mother {
+protected:
+    int m_money;
+
+public:
+    Mother(int m) {
+        m_money = m;
+        cout << "Mother Constructor Called" << endl;
+    }
+
+    void show() {
+        cout << "Mother's Money: " << m_money << endl;
+    }
+};
+
+// Derived Class
+class Child : public Father, public Mother {
+private:
+    int total;
+
+public:
+    Child(int f, int m) : Father(f), Mother(m) {
+        total = f + m;
+        cout << "Child Constructor Called" << endl;
+    }
+
+    void display() {
+        // Resolving ambiguity
+        Father::show();
+        Mother::show();
+
+        cout << "Total Money: " << total << endl;
+    }
+};
+
+int main() {
+    Child c(5000, 3000);
+    c.display();
+    return 0;
+}

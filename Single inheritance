@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+// Base class
+class Person {
+protected:
+    string name;
+
+public:
+    Person(string n) {
+        name = n;
+        cout << "Person Constructor Called" << endl;
+    }
+
+    void display() {
+        cout << "Name: " << name << endl;
+    }
+};
+
+// Derived class
+class Student : public Person {
+private:
+    int marks;
+
+public:
+    Student(string n, int m) : Person(n) {  // calling base constructor
+        marks = m;
+        cout << "Student Constructor Called" << endl;
+    }
+
+    void show() {
+        display();  // accessing base class function
+        cout << "Marks: " << marks << endl;
+    }
+};
+
+int main() {
+    Student s("Vishwa", 90);
+    s.show();
+    return 0;
+}
